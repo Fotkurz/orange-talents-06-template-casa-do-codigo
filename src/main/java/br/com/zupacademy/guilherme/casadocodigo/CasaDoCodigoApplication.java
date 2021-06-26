@@ -1,13 +1,13 @@
-package br.com.zup.casadocodigo;
+package br.com.zupacademy.guilherme.casadocodigo;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class CasadocodigoApplication {
+public class CasaDoCodigoApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(CasadocodigoApplication.class, args);
+		SpringApplication.run(CasaDoCodigoApplication.class, args);
 	}
 
 }
