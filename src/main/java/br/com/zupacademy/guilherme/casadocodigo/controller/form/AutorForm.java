@@ -11,18 +11,25 @@ public class AutorForm {
 
     @NotNull @NotEmpty
     private String nome;
-    @NotNull @NotEmpty @Email
+    @NotNull @NotEmpty @Email @Unique
     private String email;
     @NotNull @NotEmpty @Length(max = 400)
     private String descricao;
 
-    public AutorForm(String nome, String email, String descricao) {
+    public AutorForm(@NotNull @NotEmpty String nome,
+                     @NotNull @NotEmpty @Email @Unique String email,
+                     @NotNull @NotEmpty @Length(max = 400) String descricao) {
         this.nome = nome;
         this.email = email;
         this.descricao = descricao;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
     public Autor converter() {
         return new Autor(nome, email, descricao);
     }
+
 }

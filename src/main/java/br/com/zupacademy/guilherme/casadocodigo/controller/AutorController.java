@@ -2,7 +2,6 @@ package br.com.zupacademy.guilherme.casadocodigo.controller;
 
 import br.com.zupacademy.guilherme.casadocodigo.controller.form.AutorForm;
 import br.com.zupacademy.guilherme.casadocodigo.modelo.Autor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityManager;
@@ -19,7 +18,7 @@ public class AutorController {
 
     @PostMapping
     @Transactional
-    public void cadastrar(@RequestBody @Valid AutorForm autorForm) {
+    public void cadastrar(@RequestBody @Valid AutorForm autorForm)  {
         Autor autor = autorForm.converter();
         entityManager.persist(autor);
     }

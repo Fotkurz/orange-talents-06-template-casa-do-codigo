@@ -14,11 +14,13 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.springframework.web.util.NestedServletException;
 
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.net.URI;
+import java.security.InvalidParameterException;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -46,7 +48,7 @@ public class AutorControllerTest {
     @Test
     public void deveRetornar200SeEstiverComFormCorretamentePreenchido() throws Exception {
         URI uri = new URI("/autores");
-        String json =  "{\"nome\":\"guilherme\", \"email\":\"guilherme@gmail.com\", \"descricao\":\"Ficção Científica\"}";
+        String json =  "{\"nome\":\"guilherme\", \"email\":\"1@gmail.com\", \"descricao\":\"Ficção Científica\"}";
 
         mockMvc.perform(MockMvcRequestBuilders.post(uri)
                 .content(json)
@@ -73,7 +75,7 @@ public class AutorControllerTest {
     @Test
     public void devePersistirCorretamenteOAutorNoBanco() throws Exception {
         URI uri = new URI("/autores");
-        String json =  "{\"nome\":\"guilherme\", \"email\":\"guilherme@gmail.com\", \"descricao\":\"Ficção Científica\"}";
+        String json =  "{\"nome\":\"guilherme\", \"email\":\"2@gmail.com\", \"descricao\":\"Ficção Científica\"}";
 
         mockMvc.perform(MockMvcRequestBuilders.post(uri)
                 .content(json)
@@ -81,5 +83,41 @@ public class AutorControllerTest {
 
         Autor autor = em.find(Autor.class, 1L);
         Assert.assertNotNull(autor);
+    }
+
+    @Test
+    public void deveRetornar400QuandoEmailEhDuplicado() throws Exception {
+        URI uri = new URI("/autores");
+        String json1 =  "{\"nome\":\"guilherme\", \"email\":\"7@gmail.com\", \"descricao\":\"Ficção Científica\"}";
+        String json2 =  "{\"nome\":\"jose\", \"email\":\"7@gmail.com\", \"descricao\":\"Ficção Científica\"}";
+
+        mockMvc.perform(MockMvcRequestBuilders.post(uri)
+                .content(json1)
+                .contentType(MediaType.APPLICATION_JSON));
+        mockMvc.perform(MockMvcRequestBuilders.post(uri)
+                .content(json2)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().is(400));
+
+    }
+
+    @Test
+    public void devePassarCasoDoisAutoresTenhamEmailDiferentes() throws Exception {
+        URI uri = new URI("/autores");
+        String json1 =  "{\"nome\":\"guilherme\", \"email\":\"6@gmail.com\", \"descricao\":\"Ficção Científica\"}";
+        String json2 =  "{\"nome\":\"jose\", \"email\":\"7@gmail.com\", \"descricao\":\"Ficção Científica\"}";
+
+        mockMvc.perform(MockMvcRequestBuilders.post(uri)
+                .content(json1)
+                .contentType(MediaType.APPLICATION_JSON));
+
+        mockMvc.perform(MockMvcRequestBuilders.post(uri)
+                .content(json2)
+                .contentType(MediaType.APPLICATION_JSON));
+
+        Autor autor1 = em.find(Autor.class, 1L);
+        Autor autor2 = em.find(Autor.class, 2L);
+        Assert.assertNotNull(autor1);
+        Assert.assertNotNull(autor2);
     }
 }
