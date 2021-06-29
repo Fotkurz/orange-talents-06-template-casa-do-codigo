@@ -1,21 +1,23 @@
 package br.com.zupacademy.guilherme.casadocodigo;
 
 
-import br.com.zupacademy.guilherme.casadocodigo.repository.AutorRepository;
+import br.com.zupacademy.guilherme.casadocodigo.modelo.Autor;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.persistence.Entity;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.net.URI;
 
 @RunWith(SpringRunner.class)
@@ -27,8 +29,8 @@ public class AutorControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    @Autowired
-    private AutorRepository autorRepository;
+    @PersistenceContext
+    private EntityManager em;
 
     @Test
     public void deveriaDevolver400CasoEmailEstejaEmFormatoIncorreto() throws Exception {
@@ -66,5 +68,18 @@ public class AutorControllerTest {
                 .content(json)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().is(400));
+    }
+
+    @Test
+    public void devePersistirCorretamenteOAutorNoBanco() throws Exception {
+        URI uri = new URI("/autores");
+        String json =  "{\"nome\":\"guilherme\", \"email\":\"guilherme@gmail.com\", \"descricao\":\"Ficção Científica\"}";
+
+        mockMvc.perform(MockMvcRequestBuilders.post(uri)
+                .content(json)
+                .contentType(MediaType.APPLICATION_JSON));
+
+        Autor autor = em.find(Autor.class, 1L);
+        Assert.assertNotNull(autor);
     }
 }
