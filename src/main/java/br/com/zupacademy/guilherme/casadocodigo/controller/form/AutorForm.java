@@ -1,6 +1,7 @@
 package br.com.zupacademy.guilherme.casadocodigo.controller.form;
 
 import br.com.zupacademy.guilherme.casadocodigo.modelo.Autor;
+import br.com.zupacademy.guilherme.casadocodigo.validator.Unique;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.Email;
@@ -10,14 +11,14 @@ import javax.validation.constraints.NotNull;
 public class AutorForm {
 
     @NotNull @NotEmpty
-    private String nome;
-    @NotNull @NotEmpty @Email @Unique
-    private String email;
+    private final String nome;
+    @NotNull @NotEmpty @Email @Unique(fieldName = "email", clazz = Autor.class)
+    private final String email;
     @NotNull @NotEmpty @Length(max = 400)
-    private String descricao;
+    private final String descricao;
 
     public AutorForm(@NotNull @NotEmpty String nome,
-                     @NotNull @NotEmpty @Email @Unique String email,
+                     @NotNull @NotEmpty @Email @Unique(fieldName = "email", clazz = Autor.class) String email,
                      @NotNull @NotEmpty @Length(max = 400) String descricao) {
         this.nome = nome;
         this.email = email;

@@ -28,7 +28,7 @@ public class Autor {
     @Length(max = 400)
     private String descricao;
     @NotNull
-    private LocalDateTime dataCriacao = LocalDateTime.now();
+    private final LocalDateTime dataCriacao = LocalDateTime.now();
 
     public Autor() {
     }
