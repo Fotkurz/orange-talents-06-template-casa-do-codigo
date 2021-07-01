@@ -5,16 +5,17 @@ import javax.validation.Payload;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
-import static java.lang.annotation.ElementType.*;
+import static java.lang.annotation.ElementType.FIELD;
+import static java.lang.annotation.ElementType.PARAMETER;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
-@Target({ METHOD, FIELD, PARAMETER})
+@Target({ FIELD, PARAMETER})
 @Retention(RUNTIME)
-@Constraint(validatedBy = UnicoValidator.class)
-public @interface Unique {
+@Constraint(validatedBy = ExisteIdValidator.class)
+public @interface ExistsId {
+    String entityName();
     String fieldName();
-    String clazz();
-    String message() default "Falha na validação de valor único";
+    String message() default "Entidade não encontrada";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }

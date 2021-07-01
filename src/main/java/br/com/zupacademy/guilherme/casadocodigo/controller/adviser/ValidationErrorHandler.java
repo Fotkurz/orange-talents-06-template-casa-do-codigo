@@ -20,6 +20,7 @@ public class ValidationErrorHandler {
     @Autowired
     private MessageSource messageSource;
 
+
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public List<ErroDeFormularioDto> handle(MethodArgumentNotValidException exception) {
@@ -32,8 +33,8 @@ public class ValidationErrorHandler {
             ErroDeFormularioDto erro = new ErroDeFormularioDto(e.getField(), mensagem);
             listErroDto.add(erro);
         });
-        Integer numeroErros = listErroDto.size();
         return listErroDto;
     }
+
 
 }

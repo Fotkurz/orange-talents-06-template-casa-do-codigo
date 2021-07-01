@@ -10,7 +10,7 @@ public class UnicoValidator implements ConstraintValidator<Unique, String> {
 
     private final EntityManager em;
     private String fieldName;
-    private Class<?> clazz;
+    private String clazz;
 
     public UnicoValidator(final EntityManager em) {
         this.em = em;
@@ -25,7 +25,7 @@ public class UnicoValidator implements ConstraintValidator<Unique, String> {
     @Override
     public boolean isValid(String campo, ConstraintValidatorContext context) {
 
-        String jpql = "SELECT x FROM " + clazz.getSimpleName() + " x WHERE x." + fieldName + " = :pCampo";
+        String jpql = "SELECT x FROM " + clazz + " x WHERE x." + fieldName + " = :pCampo";
         Query query = em.createQuery(jpql).setParameter("pCampo", campo);
 
         List<Object> list = query.getResultList();

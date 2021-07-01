@@ -10,7 +10,7 @@ public class CategoriaForm {
 
     @NotNull
     @NotEmpty
-    @Unique(fieldName = "nome", clazz = Categoria.class)
+    @Unique(fieldName = "nome", clazz = "Categoria")
     private String nome;
 
     public CategoriaForm(){}

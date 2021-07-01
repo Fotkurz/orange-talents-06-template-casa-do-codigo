@@ -12,13 +12,13 @@ public class AutorForm {
 
     @NotNull @NotEmpty
     private final String nome;
-    @NotNull @NotEmpty @Email @Unique(fieldName = "email", clazz = Autor.class)
+    @NotNull @NotEmpty @Email @Unique(fieldName = "email", clazz = "Autor")
     private final String email;
     @NotNull @NotEmpty @Length(max = 400)
     private final String descricao;
 
     public AutorForm(@NotNull @NotEmpty String nome,
-                     @NotNull @NotEmpty @Email @Unique(fieldName = "email", clazz = Autor.class) String email,
+                     @NotNull @NotEmpty @Email @Unique(fieldName = "email", clazz = "Autor") String email,
                      @NotNull @NotEmpty @Length(max = 400) String descricao) {
         this.nome = nome;
         this.email = email;
