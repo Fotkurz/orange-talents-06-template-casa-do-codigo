@@ -14,7 +14,6 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Constraint(validatedBy = ExisteIdValidator.class)
 public @interface ExistsId {
     String entityName();
-    String fieldName();
     String message() default "Entidade não encontrada";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};

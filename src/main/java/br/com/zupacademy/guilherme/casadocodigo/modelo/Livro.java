@@ -20,6 +20,7 @@ public class Livro {
     private String titulo;
     @NotBlank @Column(length = 500)
     private String resumo;
+    @Column(length = 3000)
     private String sumario;
     @NotNull @Range(min = 20)
     private BigDecimal preco;

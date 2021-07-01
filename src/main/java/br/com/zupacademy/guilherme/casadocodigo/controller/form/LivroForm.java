@@ -21,21 +21,23 @@ public class LivroForm {
     private String titulo;
     @NotBlank @Length(max = 500)
     private String resumo;
+
     private String sumario;
     @NotNull @Range(min = 20)
     private BigDecimal preco;
     @NotNull @Range(min = 100)
     private Integer paginas;
-    @NotBlank @Unique(fieldName = "isbn", clazz = "Livro")
+    @NotBlank
+    @Unique(fieldName = "isbn", clazz = "Livro")
     private String isbn;
     @FutureOrPresent
     @NotNull
     private LocalDate dataPublicacao;
 
-    @NotNull @ExistsId(entityName = "Autor", fieldName = "idAutor")
+    @NotNull @ExistsId(entityName = "Autor")
     private Long idAutor;
 
-    @NotNull @ExistsId(entityName = "Categoria", fieldName = "idCategoria")
+    @NotNull @ExistsId(entityName = "Categoria")
     private Long idCategoria;
 
     public LivroForm(String titulo, String resumo, String sumario,
@@ -50,6 +52,34 @@ public class LivroForm {
         this.idAutor = idAutor;
         this.idCategoria = idCategoria;
         this.dataPublicacao = dataPublicacao;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public String getResumo() {
+        return resumo;
+    }
+
+    public String getSumario() {
+        return sumario;
+    }
+
+    public BigDecimal getPreco() {
+        return preco;
+    }
+
+    public Integer getPaginas() {
+        return paginas;
+    }
+
+    public String getIsbn() {
+        return isbn;
+    }
+
+    public LocalDate getDataPublicacao() {
+        return dataPublicacao;
     }
 
     public Long getIdAutor() { return idAutor; }

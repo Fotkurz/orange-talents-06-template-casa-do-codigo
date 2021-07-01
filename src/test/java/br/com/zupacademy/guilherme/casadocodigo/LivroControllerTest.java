@@ -1,10 +1,12 @@
 package br.com.zupacademy.guilherme.casadocodigo;
 
 
-import br.com.zupacademy.guilherme.casadocodigo.controller.adviser.ValidationErrorHandler;
+import br.com.zupacademy.guilherme.casadocodigo.controller.form.AutorForm;
+import br.com.zupacademy.guilherme.casadocodigo.controller.form.CategoriaForm;
+import br.com.zupacademy.guilherme.casadocodigo.controller.form.LivroForm;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.junit.Test;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -21,6 +23,9 @@ import javax.persistence.PersistenceContext;
 import java.math.BigDecimal;
 import java.net.URI;
 import java.time.LocalDate;
+import java.time.Month;
+import java.time.Year;
+import java.util.Date;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -35,11 +40,12 @@ public class LivroControllerTest {
     private EntityManager em;
 
     @Autowired
-    private ValidationErrorHandler handler;
+    ObjectMapper jsonMapper;
 
     @Test
+    @DisplayName("Deve falhar ao tentar criar um livro nome, por que o autor e categoria não foram cadastradas")
     public void deveriaDevolver400CasoFalheEmAlgumaConstraint() throws Exception {
-        URI uri = new URI("/autores");
+        URI uri = new URI("/livros");
         String titulo = "Senhor dos aneis";
         String resumo = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt " +
                 "ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco " +
@@ -53,27 +59,77 @@ public class LivroControllerTest {
         Integer paginas = 500;
         String isbn = "988-3-16-148410-0";
         LocalDate dataPublicacao = LocalDate.of(2022, 01, 01);
-        Integer idAutor = 1;
-        Integer idCategoria = 1;
+        Long idAutor = 1L;
+        Long idCategoria = 1L;
 
-        ObjectMapper mapper = new ObjectMapper();
-        ObjectNode objectJson = mapper.createObjectNode();
-        objectJson.put("titulo",titulo);
-        objectJson.put("resumo", resumo);
-        objectJson.put("sumario", sumario);
-        objectJson.put("preco", preco);
-        objectJson.put("paginas", paginas);
-        objectJson.put("isbn", isbn);
-        objectJson.put("dataPublicacao", "2022-01-01");
-        objectJson.put("idAutor", 1);
-        objectJson.put("idCategoria", 1);
+        LivroForm form = new LivroForm(titulo, resumo, sumario,
+                                        preco, paginas, isbn,
+                                dataPublicacao, idAutor, idCategoria);
 
-        String json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(objectJson);
-        System.out.println(json);
+        String json = jsonMapper.writeValueAsString(form);
+
         mockMvc.perform(MockMvcRequestBuilders.post(uri)
         .content(json)
         .contentType(MediaType.APPLICATION_JSON))
         .andExpect(MockMvcResultMatchers.status().is(400));
     }
 
+    @Test
+    public void deveRetornar200AoCriarCorretamenteOLivro() throws Exception {
+        URI uriLivros = new URI("/livros");
+        URI uriAutores = new URI("/autores");
+        URI uriCategoria = new URI("/categorias");
+        String titulo = "Senhor dos aneis";
+        String resumo = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt " +
+                "ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco " +
+                "laboris";
+        String sumario = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt " +
+                "ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco " +
+                "laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in " +
+                "voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat" +
+                " non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
+        BigDecimal preco = new BigDecimal(1223.50);
+        Integer paginas = 500;
+        String isbn = "988-3-16-148410-0";
+        LocalDate dataPublicacao = LocalDate.of(2022, 1, 1);
+        Long idAutor = 1L;
+        Long idCategoria = 1L;
+
+        LivroForm livroForm = new LivroForm(titulo, resumo, sumario,
+                preco, paginas, isbn,
+                dataPublicacao, idAutor, idCategoria);
+
+        AutorForm autorForm = new AutorForm("Guilherme","guilherme@gmail.com", "esse e a desc");
+
+        CategoriaForm categoriaForm = new CategoriaForm("FICCAO");
+
+        String jsonAutor = jsonMapper.writeValueAsString(autorForm);
+        System.out.println("Autor");
+        System.out.println(jsonAutor);
+
+        String jsonCategoria = jsonMapper.writeValueAsString(categoriaForm);
+        System.out.println("Categoria");
+        System.out.println(jsonCategoria);
+
+        String jsonLivro = jsonMapper.writeValueAsString(livroForm);
+        System.out.println("Livro");
+        System.out.println(jsonLivro);
+
+
+        System.out.println("Mock Autores");
+        mockMvc.perform(MockMvcRequestBuilders.post(uriAutores)
+                .content(jsonAutor)
+                .contentType(MediaType.APPLICATION_JSON));
+
+        System.out.println("Mock Categoria");
+        mockMvc.perform(MockMvcRequestBuilders.post(uriCategoria)
+                .content(jsonCategoria)
+                .contentType(MediaType.APPLICATION_JSON));
+
+        System.out.println("Mock Livros");
+        mockMvc.perform(MockMvcRequestBuilders.post(uriLivros)
+                .content(jsonLivro)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().is(200));
+    }
 }

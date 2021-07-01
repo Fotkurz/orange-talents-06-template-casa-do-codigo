@@ -21,12 +21,13 @@ public class ExisteIdValidator implements ConstraintValidator<ExistsId, Number>{
     @Override
     public void initialize(ExistsId constraintAnnotation) {
         this.entity = constraintAnnotation.entityName();
-        this.fieldName = constraintAnnotation.fieldName();
     }
 
     @Override
     public boolean isValid(Number value, ConstraintValidatorContext context) {
-        String jpql = "SELECT x FROM " + entity + " x WHERE x." + fieldName + " = :pValue";
+        String jpql = "SELECT x FROM " + entity + " x WHERE x.id = :pValue";
+        System.out.println(entity);
+        System.out.println(fieldName);
         Query query = em.createQuery(jpql)
                 .setParameter("pValue", value);
         List<Object> list = query.getResultList();
