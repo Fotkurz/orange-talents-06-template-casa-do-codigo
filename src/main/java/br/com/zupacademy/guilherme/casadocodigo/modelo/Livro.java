@@ -53,4 +53,31 @@ public class Livro {
         this.categoria = categoria;
     }
 
+    public Long getId() {
+        return this.id;
+    }
+
+    public String getTitulo() {
+        return this.titulo;
+    }
+
+    public BigDecimal getPreco() {
+        return this.preco;
+    }
+
+    public Integer getPaginas() {
+        return this.paginas;
+    }
+
+    public Autor getAutor() {
+        return this.autor;
+    }
+
+    public Categoria getCategoria() {
+        return this.categoria;
+    }
+
+    public String getIsbn() {
+        return this.isbn;
+    }
 }
