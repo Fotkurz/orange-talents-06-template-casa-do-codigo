@@ -1,11 +1,11 @@
 package br.com.zupacademy.guilherme.casadocodigo.controller;
 
 import br.com.zupacademy.guilherme.casadocodigo.controller.form.LivroForm;
+import br.com.zupacademy.guilherme.casadocodigo.dto.LivroDetalheResponseDto;
 import br.com.zupacademy.guilherme.casadocodigo.dto.LivroResponseDto;
 import br.com.zupacademy.guilherme.casadocodigo.modelo.Autor;
 import br.com.zupacademy.guilherme.casadocodigo.modelo.Categoria;
 import br.com.zupacademy.guilherme.casadocodigo.modelo.Livro;
-import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,7 +15,6 @@ import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/livros")
@@ -50,4 +49,15 @@ public class LivroController {
 
         return ResponseEntity.ok().body(LivroResponseDto.getLivros(list));
     }
+
+    @GetMapping("/{id}")
+    @Transactional
+    public ResponseEntity<LivroDetalheResponseDto> detalhar (@PathVariable Long id) {
+        Livro livro = em.find(Livro.class, id);
+        if (livro != null) {
+            return ResponseEntity.ok().body(new LivroDetalheResponseDto(livro));
+        }
+        return ResponseEntity.notFound().build();
+    }
+
 }

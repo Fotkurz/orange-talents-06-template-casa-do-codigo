@@ -1,11 +1,7 @@
 package br.com.zupacademy.guilherme.casadocodigo.dto;
 
-import br.com.zupacademy.guilherme.casadocodigo.modelo.Autor;
-import br.com.zupacademy.guilherme.casadocodigo.modelo.Categoria;
 import br.com.zupacademy.guilherme.casadocodigo.modelo.Livro;
-import com.fasterxml.jackson.annotation.JsonRawValue;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +14,6 @@ public class LivroResponseDto {
     public LivroResponseDto(Livro livro) {
         this.id = livro.getId();
         this.titulo = livro.getTitulo();
-
     }
 
     public Long getId() {
@@ -34,7 +29,6 @@ public class LivroResponseDto {
         listaLivros.forEach(e -> {
             lista.add(new LivroResponseDto(e));
         });
-
         return lista;
     }
 

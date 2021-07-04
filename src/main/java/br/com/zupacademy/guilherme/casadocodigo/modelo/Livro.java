@@ -80,4 +80,12 @@ public class Livro {
     public String getIsbn() {
         return this.isbn;
     }
+
+    public String getSumario() {
+        return this.sumario;
+    }
+
+    public String getResumo() {
+        return this.resumo;
+    }
 }
