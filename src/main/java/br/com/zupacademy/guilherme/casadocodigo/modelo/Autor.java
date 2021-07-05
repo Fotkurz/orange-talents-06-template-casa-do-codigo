@@ -43,4 +43,16 @@ public class Autor {
     public Long getId() {
         return this.id;
     }
+
+    public String getNome() {
+        return this.nome;
+    }
+
+    public String getEmail() {
+        return this.email;
+    }
+
+    public String getDescricao() {
+        return this.descricao;
+    }
 }

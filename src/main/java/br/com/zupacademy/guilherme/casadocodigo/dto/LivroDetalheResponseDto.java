@@ -16,10 +16,12 @@ public class LivroDetalheResponseDto {
     private Integer paginas;
     private String isbn;
 
-    private Autor autor;
-    private Categoria categoria;
+    private AutorDetalheResponseDto autor;
+    private CategoriaResponseDto categoria;
 
-    public LivroDetalheResponseDto(Livro livro) {
+
+    // Implementar os detalhes do Autor aqui também.
+    public LivroDetalheResponseDto(Livro livro, Autor autor, Categoria categoria) {
         this.id = livro.getId();
         this.titulo = livro.getTitulo();
         this.resumo = livro.getResumo();
@@ -27,8 +29,8 @@ public class LivroDetalheResponseDto {
         this.preco = livro.getPreco();
         this.paginas = livro.getPaginas();
         this.isbn = livro.getIsbn();
-        this.autor = livro.getAutor();
-        this.categoria = livro.getCategoria();
+        this.autor = new AutorDetalheResponseDto(autor);
+        this.categoria = new CategoriaResponseDto(categoria);
     }
 
 
@@ -60,11 +62,11 @@ public class LivroDetalheResponseDto {
         return isbn;
     }
 
-    public Autor getAutor() {
+    public AutorDetalheResponseDto getAutor() {
         return autor;
     }
 
-    public Categoria getCategoria() {
+    public CategoriaResponseDto getCategoria() {
         return categoria;
     }
 }

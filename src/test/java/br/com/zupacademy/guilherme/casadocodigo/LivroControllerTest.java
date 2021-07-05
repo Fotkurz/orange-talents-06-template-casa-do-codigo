@@ -178,7 +178,7 @@ public class LivroControllerTest {
                 .contentType(MediaType.APPLICATION_JSON).content(json));
 
         Livro livro = em.find(Livro.class, 1L);
-        LivroDetalheResponseDto dto = new LivroDetalheResponseDto(livro);
+        LivroDetalheResponseDto dto = new LivroDetalheResponseDto(livro, autor, categoria);
 
         String jsonDto = jsonMapper.writeValueAsString(dto);
 

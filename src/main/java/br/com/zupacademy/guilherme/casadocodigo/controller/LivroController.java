@@ -55,7 +55,9 @@ public class LivroController {
     public ResponseEntity<LivroDetalheResponseDto> detalhar (@PathVariable Long id) {
         Livro livro = em.find(Livro.class, id);
         if (livro != null) {
-            return ResponseEntity.ok().body(new LivroDetalheResponseDto(livro));
+            Autor autor = em.find(Autor.class, livro.getAutor().getId());
+            Categoria categoria = em.find(Categoria.class, livro.getCategoria().getId());
+            return ResponseEntity.ok().body(new LivroDetalheResponseDto(livro, autor, categoria));
         }
         return ResponseEntity.notFound().build();
     }
