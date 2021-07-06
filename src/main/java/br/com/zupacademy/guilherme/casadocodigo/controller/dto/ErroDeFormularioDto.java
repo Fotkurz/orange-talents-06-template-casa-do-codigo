@@ -1,4 +1,4 @@
-package br.com.zupacademy.guilherme.casadocodigo.dto;
+package br.com.zupacademy.guilherme.casadocodigo.controller.dto;
 
 
 public class ErroDeFormularioDto {

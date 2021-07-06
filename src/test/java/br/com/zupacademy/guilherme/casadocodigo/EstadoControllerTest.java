@@ -80,6 +80,5 @@ public class EstadoControllerTest {
                 .content(json)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().is(400));
-
     }
 }

@@ -22,4 +22,18 @@ public class Pais {
     public String getNome() {
         return nome;
     }
+
+    public Integer getId() {
+        return this.id;
+    }
+
+    public boolean ExisteEstadoNoPais(EntityManager entityManager) {
+        String jpql = "SELECT x FROM Estado x WHERE x.pais.id = " + this.getId();
+        boolean temResultado = entityManager.createQuery(jpql).getResultList().isEmpty();
+        if(temResultado) {
+            return false;
+        }
+        return true;
+    }
+
 }

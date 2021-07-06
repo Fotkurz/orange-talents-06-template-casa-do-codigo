@@ -23,4 +23,10 @@ public class Estado {
         this.nome = nome;
         this.pais = pais;
     }
+
+    public boolean pertenceAoPais(Pais pais, EntityManager em) {
+        if(em.createQuery("SELECT x FROM Estado x WHERE x.pais.id = " + pais.getId())
+        .getResultList().isEmpty()) return false;
+        return true;
+    }
 }

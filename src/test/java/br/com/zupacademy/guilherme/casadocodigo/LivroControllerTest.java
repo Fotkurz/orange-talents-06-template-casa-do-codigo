@@ -1,11 +1,11 @@
 package br.com.zupacademy.guilherme.casadocodigo;
 
 
+import br.com.zupacademy.guilherme.casadocodigo.controller.dto.LivroDetalheResponseDto;
+import br.com.zupacademy.guilherme.casadocodigo.controller.dto.LivroResponseDto;
 import br.com.zupacademy.guilherme.casadocodigo.controller.form.AutorForm;
 import br.com.zupacademy.guilherme.casadocodigo.controller.form.CategoriaForm;
 import br.com.zupacademy.guilherme.casadocodigo.controller.form.LivroForm;
-import br.com.zupacademy.guilherme.casadocodigo.dto.LivroDetalheResponseDto;
-import br.com.zupacademy.guilherme.casadocodigo.dto.LivroResponseDto;
 import br.com.zupacademy.guilherme.casadocodigo.modelo.Autor;
 import br.com.zupacademy.guilherme.casadocodigo.modelo.Categoria;
 import br.com.zupacademy.guilherme.casadocodigo.modelo.Livro;

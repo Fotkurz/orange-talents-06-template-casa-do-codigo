@@ -12,11 +12,9 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Retention(RUNTIME)
 @Constraint(validatedBy = UnicoValidator.class)
 public @interface Unique {
-    String fieldName() default "";
-    String clazz() default "";
-    String[] combo() default "";
+    String fieldName();
+    String clazz();
     String message() default "Falha na validação de valor único";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
-
 }

@@ -4,9 +4,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class UnicoValidator implements ConstraintValidator<Unique, Object> {
@@ -14,7 +11,6 @@ public class UnicoValidator implements ConstraintValidator<Unique, Object> {
     private final EntityManager em;
     private String fieldName;
     private String clazz;
-    private List<String> combo = new ArrayList<>();
 
     public UnicoValidator(final EntityManager em) {
         this.em = em;
@@ -24,11 +20,7 @@ public class UnicoValidator implements ConstraintValidator<Unique, Object> {
     public void initialize(Unique constraintAnnotation) {
         this.fieldName = constraintAnnotation.fieldName();
         this.clazz = constraintAnnotation.clazz();
-        if(Arrays.stream(constraintAnnotation.combo()).count() != 0) {
-            for (String combo: constraintAnnotation.combo()) {
-                this.combo.add(combo);
-            }
-        }
+
     }
 
     @Override
@@ -43,7 +35,7 @@ public class UnicoValidator implements ConstraintValidator<Unique, Object> {
                 context.buildConstraintViolationWithTemplate(context.getDefaultConstraintMessageTemplate())
                         .addConstraintViolation();
             }else{
-                String message = campo + " já foi cadastrado.";
+                String message = campo + " ja foi cadastrado.";
                 context.buildConstraintViolationWithTemplate(message).addConstraintViolation();
                 context.disableDefaultConstraintViolation();
             }

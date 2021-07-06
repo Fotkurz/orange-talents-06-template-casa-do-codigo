@@ -1,4 +1,4 @@
-package br.com.zupacademy.guilherme.casadocodigo.dto;
+package br.com.zupacademy.guilherme.casadocodigo.controller.dto;
 
 import br.com.zupacademy.guilherme.casadocodigo.modelo.Autor;
 import br.com.zupacademy.guilherme.casadocodigo.modelo.Categoria;

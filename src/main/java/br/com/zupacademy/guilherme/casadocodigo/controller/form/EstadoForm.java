@@ -3,8 +3,6 @@ package br.com.zupacademy.guilherme.casadocodigo.controller.form;
 import br.com.zupacademy.guilherme.casadocodigo.modelo.Estado;
 import br.com.zupacademy.guilherme.casadocodigo.modelo.Pais;
 import br.com.zupacademy.guilherme.casadocodigo.validator.ExistsId;
-import br.com.zupacademy.guilherme.casadocodigo.validator.UniqueCombo;
-import org.hibernate.jpa.TypedParameterValue;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;

@@ -25,14 +25,16 @@ public class ExisteIdValidator implements ConstraintValidator<ExistsId, Number>{
 
     @Override
     public boolean isValid(Number value, ConstraintValidatorContext context) {
-        String jpql = "SELECT x FROM " + entity + " x WHERE x.id = :pValue";
-        Query query = em.createQuery(jpql)
-                .setParameter("pValue", value);
-        List<Object> list = query.getResultList();
-        if (list.isEmpty()) {
-            context.disableDefaultConstraintViolation();
-            context.buildConstraintViolationWithTemplate(entity + " inexistente!").addConstraintViolation();
-            return false;
+        if(value != null) {
+            String jpql = "SELECT x FROM " + entity + " x WHERE x.id = :pValue";
+            Query query = em.createQuery(jpql)
+                    .setParameter("pValue", value);
+            List<Object> list = query.getResultList();
+            if (list.isEmpty()) {
+                context.disableDefaultConstraintViolation();
+                context.buildConstraintViolationWithTemplate(entity + " inexistente!").addConstraintViolation();
+                return false;
+            }
         }
         return true;
     }
