@@ -7,6 +7,8 @@ import br.com.zupacademy.guilherme.casadocodigo.modelo.Estado;
 import br.com.zupacademy.guilherme.casadocodigo.modelo.Pais;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -39,6 +41,12 @@ public class ClienteControllerTest {
 
     @PersistenceContext
     private EntityManager em;
+
+    @BeforeAll
+    @Transactional
+    public void testSetUp() {
+        em.createQuery("DELETE FROM {spring.datasource.url}");
+    }
 
     public ObjectMapper jsonMapper = new ObjectMapper();
 
